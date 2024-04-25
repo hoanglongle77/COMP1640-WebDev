@@ -18,5 +18,6 @@ namespace COMP1640_WebDev.Repositories.Interfaces
         List<MagazineTableView> GetAllMagazinesByFaculty(string userFacultyId);
         List<MagazineTableView> GetAllMagazinesForGuest();
         List<MagazineTableView> SearchMagazinesByTitle(string title);
+        Task<int> CountMagazines();
     }
 }

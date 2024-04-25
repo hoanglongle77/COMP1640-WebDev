@@ -10,33 +10,58 @@
     }
 
         .rounded-3d:hover {
-            transform: scale3d(1.1, 1.1, 1.1); 
+            transform: scale3d(1.05, 1.05, 1.05);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .rounded-3d:hover {
-            transition: all 0.3s ease;
+    .magazine-image {
+        max-height: 450px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    .details-section {
+        padding: 50px 0;
+    }
+
+        .details-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
         }
 
-    .magazine-image {
-        height:450px;
-        width: 300px;
-    }
+        .details-section p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .details-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .details-section li {
+            margin-bottom: 10px;
+            color: #888;
+        }
+
 </style>
 
-<div class="min-vh-100 px-4 mt-4 mb-4">
-    <div class="row">
-        <div class="col-sm-6 col-lg-6 col-xl-6">
-            <img src="@ViewBag.Image" class="img-fluid rounded-3d magazine-image" alt="Image">
+<div class="container details-section">
+    <div class="row mx-4">
+        <div class="col-md-4">
+            <img src="@ViewBag.Image" class="img-fluid rounded-3d magazine-image" alt="Magazine Cover">
         </div>
-        <div class="col-sm-6 col-lg-6 col-xl-6">
-            <h1 class="display-4">@Model.Title</h1>
-            <p class="lead">Description: @Model.Description</p>
-            <ul class="list-unstyled">
-                <li><strong>Faculty:</strong> @Model.Faculty!.FacultyName</li>
-                <li><strong>Start Date:</strong> @Model.AcademicYear!.StartDate</li>
-                <li><strong>Closure Date:</strong> @Model.AcademicYear!.ClosureDate</li>
-                <li><strong>Final Date:</strong> @Model.AcademicYear!.FinalDate</li>
+        <div class="col-md-8 mt-3 mt-lg-0">
+            <h1><strong>Title: </strong>@Model.Title</h1>
+            <p><strong>Description: </strong>@Model.Description</p>
+            <ul>
+                <li><i class="bi bi-person"></i> <strong>Faculty:</strong> @Model.Faculty!.FacultyName</li>
+                <li><i class="bi bi-calendar"></i> <strong>Start Date:</strong> @Model.AcademicYear!.StartDate</li>
+                <li><i class="bi bi-calendar-check"></i> <strong>Closure Date:</strong> @Model.AcademicYear!.ClosureDate</li>
+                <li><i class="bi bi-calendar-event"></i> <strong>Final Date:</strong> @Model.AcademicYear!.FinalDate</li>
             </ul>
         </div>
     </div>

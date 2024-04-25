@@ -19,11 +19,22 @@ namespace COMP1640_WebDev.Controllers
 		private readonly IEmailService _emailService = emailService;
         private readonly UserManager<User> _userManager = userManager;
 
-        [HttpGet]
-		public IActionResult Index()
+
+		[HttpGet]
+		public async Task<IActionResult> IndexAsync()
+
 		{
-			return View();
+            int acceptedFilesData = await _contributionRepository.CountAcceptedFiles();
+            int rejectedFilesData = await _contributionRepository.CountRejectedFiles();
+            int inprogressFileData = await _contributionRepository.CountInprogressFiles();
+
+            ViewBag.AcceptedData = acceptedFilesData;
+            ViewBag.RejectedData = rejectedFilesData;
+            ViewBag.WaitingData = inprogressFileData;
+
+            return View();
 		}
+
 		[HttpGet]
 		public async Task<IActionResult> PostManagement()
 		{

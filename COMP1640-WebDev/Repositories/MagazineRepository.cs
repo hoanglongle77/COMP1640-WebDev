@@ -206,7 +206,9 @@ namespace COMP1640_WebDev.Repositories
             return string.Format("data:image/jpg;base64,{0}", imageBase64Data);
         }
 
-      
-
+        public Task<int> CountMagazines()
+        {
+            return _dbContext.Magazines!.CountAsync();
+        }
     }
 }

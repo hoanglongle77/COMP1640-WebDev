@@ -15,16 +15,23 @@ namespace COMP1640_WebDev.Controllers
 {
 
 	[Authorize(Roles = "Marketing Manager")]
-	public class MarketingManagerController(IWebHostEnvironment hostEnvironment, IMagazineRepository magazineRepository, IAcademicYearRepository academicYearRepository, IFacultyRepository facultyRepository) : Controller
+	public class MarketingManagerController(IWebHostEnvironment hostEnvironment, IMagazineRepository magazineRepository, IAcademicYearRepository academicYearRepository, IFacultyRepository facultyRepository,IContributionRepository contributionRepository) : Controller
 	{
 		private readonly IMagazineRepository _magazineRepository = magazineRepository;
 		private readonly IAcademicYearRepository _academicYearRepository = academicYearRepository;
 		private readonly IFacultyRepository _facultyRepository = facultyRepository;
+		private readonly IContributionRepository _contributionRepository = contributionRepository;
 		private readonly IWebHostEnvironment _hostEnvironment = hostEnvironment;
 
-		public IActionResult Index()
+		public async Task<IActionResult> IndexAsync()
 		{
-			return View();
+            int magazinesData = await _magazineRepository.CountMagazines();
+            int filesData = await _contributionRepository.CountFiles();
+
+            ViewBag.MagazinesData = magazinesData;
+            ViewBag.FilesData = filesData;
+
+            return View();
 		}
 
 		[HttpGet]
@@ -150,7 +157,7 @@ namespace COMP1640_WebDev.Controllers
 		}
 
 
-		public IActionResult DownloadZip1()
+		public IActionResult DownloadZip()
 		{
 			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "images");
 

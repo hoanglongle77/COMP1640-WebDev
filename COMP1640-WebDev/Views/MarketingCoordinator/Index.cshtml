@@ -1,26 +1,16 @@
-﻿
-@{
-    Layout = "./Layout/_MCLayout.cshtml";
+﻿@{
+    Layout = "./Layout/_MCLayout";
 }
 
 <div class="px-4 mt-4 min-vh-100">
     <h1 class="mb-3">Dashboard</h1>
 
-    <div class="row ">
-        <div class="col-lg-4 mb-4">
-            <div class="card bg-success text-white" style="height: 100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Total User Accounts</h5>
-                    <canvas id="usersChart"></canvas>
-                </div>
-            </div>
-        </div>
-
+    <div class="row">
         <div class="col-lg-4 mb-4">
             <div class="card bg-primary text-white">
                 <div class="card-body">
-                    <h5 class="card-title">Total Faculties</h5>
-                    <canvas id="facultiesChart" style="height: 200px;"></canvas>
+                    <h5 class="card-title" style="font-weight: bold; font-size: 24px;">Total Accepted Contributions</h5>
+                    <p class="card-text" style="font-weight: bold; font-size: 20px;">@ViewBag.AcceptedData</p> <!-- Display total magazine count -->
                 </div>
             </div>
         </div>
@@ -28,8 +18,16 @@
         <div class="col-lg-4 mb-4">
             <div class="card bg-warning text-dark">
                 <div class="card-body">
-                    <h5 class="card-title">Total Semesters</h5>
-                    <canvas id="semestersChart" style="height: 200px;"></canvas>
+                    <h5 class="card-title" style="font-weight: bold; font-size: 24px;">Total Rejected Contributions</h5>
+                    <p class="card-text" style="font-weight: bold; font-size: 20px;">@ViewBag.RejectedData</p> <!-- Display total file count -->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card bg-secondary text-dark">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 24px;">Total Contributions pending approval</h5>
+                    <p class="card-text" style="font-weight: bold; font-size: 20px;">@ViewBag.WaitingData</p> <!-- Display total file count -->
                 </div>
             </div>
         </div>
@@ -40,100 +38,9 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Quick Links</h5>
-                    <a asp-controller="Marketingmanagerment" asp-action="AccountsManagement" class="btn btn-primary mb-2">Manage User Accounts</a>
-                    <a asp-controller="Admin" asp-action="FacultiesManagement" class="btn btn-primary mb-2">Manage Faculties</a>
-                    <a asp-controller="Admin" asp-action="SemestersManagement" class="btn btn-primary mb-2">Manage Semesters</a>
+                    <a asp-controller="MarketingCoordinator" asp-action="PostManagement" class="btn btn-primary mb-2">Manage Contributions</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@section scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Sample data for charts (replace with actual data)
-        var facultiesData =  @Html.Raw(Json.Serialize(ViewBag.FacultiesData));
-        var usersData = @Html.Raw(Json.Serialize(ViewBag.UsersData));
-        var semestersData = @Html.Raw(Json.Serialize(ViewBag.SemestersData));
-
-        // Create faculty chart
-        var facultiesChart = new Chart(document.getElementById('facultiesChart'), {
-            type: 'pie',
-            data: {
-                labels: [],
-                datasets: [{
-                    data: facultiesData,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Create users chart
-        var usersChart = new Chart(document.getElementById('usersChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Student', 'Marketing Coordinator'],
-                datasets: [{
-                    label: 'Number of Users',
-                    data: usersData,
-                    backgroundColor: ['#4CAF50', '#4CAF50', '#4CAF50']
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: 'white',
-                            max: 100,
-                            min: 0
-                        }
-
-                    },
-                    x: {
-                        ticks: {
-                            color: 'white'
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Create semesters chart
-        var semestersChart = new Chart(document.getElementById('semestersChart'), {
-            type: 'doughnut',
-            data: {
-                labels: [],
-                datasets: [{
-                    data: semestersData,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'white'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-}
