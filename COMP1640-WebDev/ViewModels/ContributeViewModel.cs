@@ -9,9 +9,10 @@ namespace COMP1640_WebDev.ViewModels
         public string Id { get; set; }
         public string AcademicYearId { get; set; }
         public IEnumerable<AcademicYear>? AcademicYears { get; set; }
+        public string? MagazineId { get; set; }
 
         public string Title { get; set; }
-        public string Document { get; set; }
+        public string? Document { get; set; }
 
         [Display(Name = "File")]
         public IFormFile? FormFile { get; set; }

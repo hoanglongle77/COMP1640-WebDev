@@ -17,6 +17,8 @@ namespace COMP1640_WebDev.Models
         public string AcademicYearId { get; set; } = string.Empty;
         public AcademicYear AcademicYear { get; set; }
 
+        public string MagazineId { get; set; } = string.Empty;
+        //Cai nay de khi get detail magazine thi co list contributon
         public string Title { get; set; } = string.Empty;
         public string Document { get; set; } = string.Empty;
         public byte[] Image { get; set; }

@@ -2,6 +2,7 @@
 using COMP1640_WebDev.Models;
 using COMP1640_WebDev.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 
@@ -10,10 +11,12 @@ namespace COMP1640_WebDev.Repositories
 	public class ContributionRepository : IContributionRepository
 	{
 		private readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<User> _userManager;
 
-		public ContributionRepository(ApplicationDbContext dbContext)
+        public ContributionRepository(ApplicationDbContext dbContext, UserManager<User> userManager)
 		{
 			_dbContext = dbContext;
+			_userManager = userManager;
 		}
 		public async Task<Contribution> CreateContribution(Contribution contribution, IFormFile? formFile)
 		{
@@ -52,15 +55,16 @@ namespace COMP1640_WebDev.Repositories
 
 		}
 
-		public async Task<IEnumerable<Contribution>> GetContributionsInprogess()
+		public async Task<IEnumerable<Contribution>> GetContributionsInprogess(string facID)
 		{
-			return await _dbContext.Contributions.Include(u => u.User).Where(c => c.Status == Enum.BrowserComment.InProgess).ToListAsync();
+
+            return await _dbContext.Contributions.Include(u => u.User).Where(c => c.Status == Enum.BrowserComment.InProgess && c.User.FacultyId == facID).ToListAsync();
 
 		}
 
-		public async Task<List<Contribution>> GetContributionsAccept()
+		public async Task<List<Contribution>> GetContributionsAccept(string magazineID)
 		{
-			return await _dbContext.Contributions.Include(u => u.User).Where(c => c.Status == Enum.BrowserComment.Accepted).ToListAsync();
+			return await _dbContext.Contributions.Include(u => u.User).Where(c => c.Status == Enum.BrowserComment.Accepted && c.MagazineId == magazineID).ToListAsync();
 
 		}
 		public Task<Contribution> RemoveContribution(string idContribution)

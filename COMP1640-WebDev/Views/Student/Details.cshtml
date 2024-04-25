@@ -89,6 +89,7 @@
                                 <th>Contribution Name</th>
                                 <th>Image</th>
                                 <th>Student Name</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +101,13 @@
                                     <td> <img src="@contribution.ImageString" class="img-fluid rounded-3d magazine-image mb-3 mb-lg-0" alt="Image"></td>
                                     <td>@contribution.Title</td>
                                     <td>@contribution.User.UserName</td>
+                                   
+                                    @if (ViewBag.Email == contribution.User.UserName)
+                                    {
+                                        <td>
+                                            <a asp-action="Edit" asp-controller="Student" asp-route-id=@contribution.Id class="btn btn-primary">Edit</a>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         </tbody>
