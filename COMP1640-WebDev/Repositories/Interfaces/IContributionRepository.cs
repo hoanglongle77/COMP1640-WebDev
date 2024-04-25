@@ -12,5 +12,6 @@ namespace COMP1640_WebDev.Repositories.Interfaces
         Task<Contribution> CreateContribution(Contribution contribution, IFormFile? formFile);
         Task<Contribution> RemoveContribution(string idContribution);
         Task<Contribution> UpdateContribution(string idContribution, Contribution contribution);
+        Task<int> CountFiles();
     }
 }

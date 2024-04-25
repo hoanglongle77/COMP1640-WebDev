@@ -100,5 +100,10 @@ namespace COMP1640_WebDev.Repositories
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public async Task<int> CountFiles()
+        {
+           return await _dbContext.Contributions!.CountAsync(c=>c.Status==Enum.BrowserComment.Accepted);
+        }
+    }
 }
