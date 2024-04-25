@@ -150,7 +150,7 @@ namespace COMP1640_WebDev.Controllers
 		}
 
 
-		public IActionResult DownloadZip1()
+		public IActionResult DownloadZip()
 		{
 			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "images");
 

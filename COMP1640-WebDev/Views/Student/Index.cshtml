@@ -4,56 +4,6 @@
     Layout = "./Layout/_StudentLayout";
 }
 
-
-@{
-    var articles = new[]
-           {
-        new
-        {
-            ImageUrl = "https://images.inc.com/uploaded_files/magazinetoc/INCV1_NOUPC_535.jpg",
-            Title = "Magazine Title",
-            Description = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-            LastUpdated = "Last updated 3 mins ago"
-        },
-          new
-        {
-            ImageUrl = "https://images.inc.com/uploaded_files/magazinetoc/INCV1_NOUPC_535.jpg",
-            Title = "Magazine Title",
-            Description = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-            LastUpdated = "Last updated 3 mins ago"
-        },
-          new
-        {
-            ImageUrl = "https://images.inc.com/uploaded_files/magazinetoc/INCV1_NOUPC_535.jpg",
-            Title = "Magazine Title",
-            Description = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-            LastUpdated = "Last updated 3 mins ago"
-        },
-          new
-        {
-            ImageUrl = "https://images.inc.com/uploaded_files/magazinetoc/INCV1_NOUPC_535.jpg",
-            Title = "Magazine Title",
-            Description = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-            LastUpdated = "Last updated 3 mins ago"
-        },
-          new
-        {
-            ImageUrl = "https://images.inc.com/uploaded_files/magazinetoc/INCV1_NOUPC_535.jpg",
-            Title = "Magazine Title",
-            Description = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-            LastUpdated = "Last updated 3 mins ago"
-        },
-        new
-         {
-            ImageUrl = "https://images.inc.com/uploaded_files/magazinetoc/INCV1_NOUPC_535.jpg",
-            Title = "Magazine Title",
-            Description = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-            LastUpdated = "Last updated 3 mins ago"
-        },
-    };
-}
-
-
 <style>
     .articleCard {
         height: 100%;
@@ -73,18 +23,7 @@
 </style>
 
 <div class="container-fluid">
-    <div class="row mt-3 mb-4 d-flex justify-content-lg-center">
-        <div class="col col-lg-6">
-            <form id="searchForm" action="@Url.Action("Index", "Student")" method="get">
-                <div class="input-group">
-                    <input type="text" name="title" id="searchInput" class="form-control" placeholder="Search by title" aria-label="Search by title">
-                    <button type="submit" class="btn btn-secondary">
-                        <i class="bi bi-search"></i> Search
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+  
 
     <div class="row">
         @foreach (var magazine in Model)
@@ -108,6 +47,7 @@
             </div>
         }
     </div>
+</div>
 
 
 @* <h2>Upload Files</h2>
