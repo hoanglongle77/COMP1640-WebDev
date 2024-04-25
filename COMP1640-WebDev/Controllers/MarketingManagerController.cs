@@ -147,19 +147,17 @@ namespace COMP1640_WebDev.Controllers
 			return RedirectToAction("MagazinesManagement");
 		}
 
-		public IActionResult DataManagement()
+        [HttpGet]
+        public async Task<IActionResult> DataManagement()
 		{
-			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "images");
-			var fileModels = Directory.GetFiles(uploadsPath)
-									  .Select(file => Path.GetFileName(file))
-									  .ToList();
-			return View(fileModels);
+			var contribution = await _contributionRepository.GetContributionsToDown();
+			return View(contribution);
 		}
 
 
 		public IActionResult DownloadZip()
 		{
-			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "images");
+			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "document");
 
 			var tempZipFileName = "MarketingFiles.zip";
 			var tempZipPath = Path.Combine(Path.GetTempPath(), tempZipFileName);
@@ -194,7 +192,7 @@ namespace COMP1640_WebDev.Controllers
 				return BadRequest("Invalid file name.");
 			}
 
-			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "images");
+			var uploadsPath = Path.Combine(_hostEnvironment.WebRootPath, "document");
 
 			var filePath = Path.Combine(uploadsPath, file);
 			if (!System.IO.File.Exists(filePath))

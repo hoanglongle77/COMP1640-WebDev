@@ -1,4 +1,4 @@
-﻿   @model List<string>
+﻿   @model IEnumerable<Contribution>
 @{
     ViewData["Title"] = "Manage Files";
     Layout = "./Layout/_MMLayout";
@@ -76,16 +76,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var file in Model)
+                        @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="d-flex justify-content-center"><input type="checkbox" class="custom-checkbox" name="selectedFiles" value="@file" /></td>
-                                <td>Magazine Title 1</td>
-                                <td>@file</td>
-                                <td>Name 1</td>
-                                <td>Faculty</td>
+                                <td class="d-flex justify-content-center"><input type="checkbox" class="custom-checkbox" name="selectedFiles" value="@item.Document" /></td>
+                                <td>@item.Title</td>
+                                <td>@item.Document</td>
+                                <td>@item.User.UserName</td>
+                                <td>@item.User.FacultyId</td>
                                 <td>
-                                    <a href="@Url.Action("DownloadSingleFile", "MarketingManager", new { file = file })" class="btn btn-primary">Download</a>
+                                    <a href="@Url.Action("DownloadSingleFile", "MarketingManager", new { file = @item.Document })" class="btn btn-primary">Download</a>
                                 </td>
                             </tr>
                         }

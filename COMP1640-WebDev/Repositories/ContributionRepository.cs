@@ -124,5 +124,11 @@ namespace COMP1640_WebDev.Repositories
         {
             return await _dbContext.Contributions!.CountAsync(c => c.Status == Enum.BrowserComment.InProgess);
         }
+
+        public async Task<IEnumerable<Contribution>> GetContributionsToDown()
+        {
+            return await _dbContext.Contributions.Include(u => u.User).Where(c => c.Status == Enum.BrowserComment.Accepted).ToListAsync();
+
+        }
     }
 }
