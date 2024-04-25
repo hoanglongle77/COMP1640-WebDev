@@ -1,0 +1,99 @@
+﻿@using COMP1640_WebDev.ViewModels
+@model ContributeViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "./Layout/_StudentLayout";
+}
+<style>
+    .rounded-3d {
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+        .rounded-3d:hover {
+            transform: scale3d(1.1, 1.1, 1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .rounded-3d:hover {
+            transition: all 0.3s ease;
+        }
+
+    .magazine-image {
+        height: 450px;
+        width: 300px;
+        border: 3px solid white;
+    }
+
+    .details {
+        border: 1px solid black;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        border-radius: 20px;
+    }
+
+    .section-contribution {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #FFFFFF;
+        border: 1px solid #dee2e6;
+        border-left: 5px solid black;
+    }
+</style>
+
+    <div class="my-3">
+        <div class="section-contribution mb-0">
+            <h4 class="m-0 text-uppercase fw-bold">Leave a contribute</h4>
+        </div>
+        <div class="bg-white border border-top-0 p-4">
+            <form asp-controller="Student" asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="@Model.Title" class="control-label">Title</label>
+                    <input asp-for="@Model.Title" class="form-control" />
+                    <span asp-validation-for="@Model.Title" class="text-danger"></span>
+                </div>
+                <input asp-for="@Model.AcademicYearId" value=@Model.AcademicYearId class="form-control" />
+                <input asp-for="@Model.Id" value=@Model.Id class="form-control" />
+            <input asp-for="@Model.MagazineId" value=@Model.MagazineId class="form-control" />
+                <div class="mb-3">
+                    <label asp-for="@Model.FormFileWord" class="form-label">Word document</label>
+                    <input asp-for="@Model.FormFileWord" type="file" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.FormFile">Choose files to upload:</label>
+                    <input asp-for="@Model.FormFile" type="file" class="form-control" />
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="agree" required>
+                    <label class="form-check-label" for="agree">I agree to the Terms and Conditions</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["AlertMessage"]
+        </div>
+    }
+    @*   <div>
+    <h2>Upload Files</h2>
+
+    @if (ViewBag.Message != null)
+    {
+    <div class="alert alert-success">@ViewBag.Message</div>
+    }
+
+    <form asp-action="Index" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+    <label for="file">Choose files to upload:</label>
+    <input type="file" name="files" multiple class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Upload</button>
+    </form>
+    </div>
+    </div> *@

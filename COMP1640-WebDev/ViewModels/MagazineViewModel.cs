@@ -21,6 +21,8 @@ namespace COMP1640_WebDev.ViewModels
 		public IEnumerable<Faculty>? Falulties { get; set; }
 		public IEnumerable<AcademicYear>? AcademicYears { get; set; } 
 		[Display(Name = "File")]
+		[Required(ErrorMessage = "FormFile can not be null")]
+
 		public IFormFile? FormFile { get; set; }
 
 		

@@ -33,15 +33,99 @@ namespace COMP1640_WebDev.Controllers
 			return View(magazines);
 		}
 
-		[HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var contributions = await _contributionRepository.GetContribution(id);
+			var res = new ContributeViewModel { Id = contributions.Id, Title = contributions.Title, AcademicYearId  = contributions.AcademicYearId, MagazineId = contributions.MagazineId   };
+            return View(res);
+		}
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ContributeViewModel data)
+        {
+            var userId = _userManager.GetUserId(User);
+            Contribution contri = await _contributionRepository.GetContribution(data.Id!);
+            var user = await _userRepository.GetUser(userId!);
+            var academicYear = await _academicYearRepository.GetAcademicYear(data.AcademicYearId);
+            var magazineInDb = await _magazineRepository.GetMagazineByID(data.MagazineId);
+            var contributions = await _contributionRepository.GetContributionsAccept(data.Id);
+
+            string imageBase64Data = Convert.ToBase64String(magazineInDb.CoverImage!);
+            string image = string.Format("data:image/jpg;base64, {0}", imageBase64Data);
+            @ViewBag.AcademicYearId = magazineInDb.AcademicYearId;
+
+            @ViewBag.Magazine = magazineInDb;
+            @ViewBag.Image = image;
+            @ViewBag.Contributions = contributions;
+            if (DateTime.Now >= academicYear.FinalDate)
+            {
+                TempData["AlertMessage"] = "Qua han roi khong edit contribution duoc";
+
+            }
+            else
+            {
+				if (data.FormFile != null)
+				{
+					using (var memoryStream = new MemoryStream())
+					{
+						await data.FormFile.CopyToAsync(memoryStream);
+						var imageUpdate = memoryStream.ToArray();
+						contri.Image = imageUpdate;
+					}
+				}
+                contri.AcademicYearId = data.AcademicYearId;
+                contri.Title = data.Title;
+                contri.UserId = userId;
+                contri.IsEnabled = true;
+                contri.ImageString = ".";
+                contri.MagazineId = data.MagazineId;
+                if (data.FormFileWord != null)
+                {
+                    Guid myUUID = Guid.NewGuid();
+                    var fileName = myUUID.ToString() + Path.GetFileName(data.FormFileWord.FileName);
+                    var filePath = Path.Combine(_hostEnvironment.WebRootPath, "document", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await data.FormFileWord.CopyToAsync(fileStream);
+                    }
+                    contri.Document = Path.Combine("document", fileName);
+                }
+
+                await _contributionRepository.UpdateContribution(contri.Id, contri);
+
+                string imageBase64Data2 = Convert.ToBase64String(magazineInDb.CoverImage!);
+                string image2 = string.Format("data:image/jpg;base64, {0}", imageBase64Data2);
+                @ViewBag.AcademicYearId = magazineInDb.AcademicYearId;
+                @ViewBag.Email = user.Email;
+
+                @ViewBag.Magazine = magazineInDb;
+                @ViewBag.Image = image2;
+
+                for (int i = 0; i < contributions.Count(); i++)
+                {
+                    string imageString = Convert.ToBase64String(contributions[i].Image);
+                    contributions[i].ImageString = string.Format("data:image/jpg;base64, {0}", imageString);
+                }
+                @ViewBag.Contributions = contributions;
+
+
+                return View(data);
+            }
+            return View();
+        }
+
+        [HttpGet]
 		public async Task<IActionResult> Details(string id)
 		{
 			var magazineInDb = await _magazineRepository.GetMagazineByID(id);
-			var contributions = await _contributionRepository.GetContributionsAccept();
+			var contributions = await _contributionRepository.GetContributionsAccept(id);
+            var user = await _userManager.GetUserAsync(User);
 
-			string imageBase64Data = Convert.ToBase64String(magazineInDb.CoverImage!);
+            string imageBase64Data = Convert.ToBase64String(magazineInDb.CoverImage!);
 			string image = string.Format("data:image/jpg;base64, {0}", imageBase64Data);
 			@ViewBag.AcademicYearId = magazineInDb.AcademicYearId;
+			@ViewBag.Email = user.Email;
 
 			@ViewBag.Magazine = magazineInDb;
 			@ViewBag.Image = image;
@@ -65,7 +149,7 @@ namespace COMP1640_WebDev.Controllers
 			var user = await _userRepository.GetUser(userId!);
 			var academicYear = await _academicYearRepository.GetAcademicYear(data.AcademicYearId);
 			var magazineInDb = await _magazineRepository.GetMagazineByID(data.Id);
-			var contributions = await _contributionRepository.GetContributionsAccept();
+			var contributions = await _contributionRepository.GetContributionsAccept(data.Id);
 
 			string imageBase64Data = Convert.ToBase64String(magazineInDb.CoverImage!);
 			string image = string.Format("data:image/jpg;base64, {0}", imageBase64Data);
@@ -91,7 +175,7 @@ namespace COMP1640_WebDev.Controllers
 				contri.UserId = userId;
 				contri.IsEnabled = true;
 				contri.ImageString = ".";
-
+				contri.MagazineId = data.Id;
                 if (data.FormFileWord != null)
 				{
 					Guid myUUID = Guid.NewGuid();

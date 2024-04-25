@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP1640_WebDev.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240424200138_Initial-Create")]
+    [Migration("20240425173729_Initial-Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,6 +77,10 @@ namespace COMP1640_WebDev.Migrations
 
                     b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
+
+                    b.Property<string>("MagazineId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

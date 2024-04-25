@@ -9,16 +9,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using COMP1640_WebDev.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace COMP1640_WebDev.Controllers
 {
-	public class MarketingCoordinatorController(IContributionRepository contributionRepository, IEmailService emailService) : Controller
+	public class MarketingCoordinatorController(IContributionRepository contributionRepository, IEmailService emailService, UserManager<User> userManager) : Controller
 	{
 		private readonly IContributionRepository _contributionRepository = contributionRepository;
 		private readonly IEmailService _emailService = emailService;
+        private readonly UserManager<User> _userManager = userManager;
+
 
 		[HttpGet]
 		public async Task<IActionResult> IndexAsync()
+
 		{
             int acceptedFilesData = await _contributionRepository.CountAcceptedFiles();
             int rejectedFilesData = await _contributionRepository.CountRejectedFiles();
@@ -34,7 +38,9 @@ namespace COMP1640_WebDev.Controllers
 		[HttpGet]
 		public async Task<IActionResult> PostManagement()
 		{
-			var comments = await _contributionRepository.GetContributionsInprogess();
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var comments = await _contributionRepository.GetContributionsInprogess(currentUser.FacultyId);
 			return View(comments);
 		}
 

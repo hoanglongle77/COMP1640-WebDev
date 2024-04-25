@@ -26,6 +26,8 @@ namespace COMP1640_WebDev.Models
 		[ForeignKey("AcademicYear")]
 		public required string AcademicYearId { get; set; }
 		public AcademicYear? AcademicYear { get; set; }
+        //Cai nay de khi get detail magazine thi co list contributon
 
-	}
+
+    }
 }
