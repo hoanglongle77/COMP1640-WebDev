@@ -105,5 +105,20 @@ namespace COMP1640_WebDev.Repositories
         {
            return await _dbContext.Contributions!.CountAsync(c=>c.Status==Enum.BrowserComment.Accepted);
         }
+
+        public async Task<int> CountAcceptedFiles()
+        {
+            return await _dbContext.Contributions!.CountAsync(c => c.Status == Enum.BrowserComment.Accepted);
+        }
+
+        public async Task<int> CountRejectedFiles()
+        {
+            return await _dbContext.Contributions!.CountAsync(c => c.Status == Enum.BrowserComment.Rejected);
+        }
+
+        public async Task<int> CountInprogressFiles()
+        {
+            return await _dbContext.Contributions!.CountAsync(c => c.Status == Enum.BrowserComment.InProgess);
+        }
     }
 }

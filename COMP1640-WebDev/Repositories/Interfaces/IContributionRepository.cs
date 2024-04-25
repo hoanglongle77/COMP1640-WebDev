@@ -13,5 +13,8 @@ namespace COMP1640_WebDev.Repositories.Interfaces
         Task<Contribution> RemoveContribution(string idContribution);
         Task<Contribution> UpdateContribution(string idContribution, Contribution contribution);
         Task<int> CountFiles();
+        Task<int> CountAcceptedFiles();
+        Task<int> CountRejectedFiles();
+        Task<int> CountInprogressFiles();
     }
 }
